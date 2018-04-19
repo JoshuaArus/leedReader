@@ -20,6 +20,7 @@ public class SettingsActivity extends PreferenceActivity
     public static final String KEY_CONNECTION_TYPE = "connectionType";
     public static final String KEY_AUTH_TYPE       = "authenticationType";
     public static final String KEY_SHOW_EMPTY_FEED = "showEmptyFeeds";
+    public static final String KEY_CHECK_UNREAD    = "checkUnread";
 
     private EditTextPreference mServerLinkPref;
     private EditTextPreference mUsernamePref;
@@ -27,12 +28,14 @@ public class SettingsActivity extends PreferenceActivity
     private ListPreference     mConnectionType;
     private ListPreference     mAuthType;
     private ListPreference     mShowEmptyFeeds;
+    private ListPreference mCheckUnread;
 
     OnPreferenceChangeListener textChangeListener;
     OnPreferenceChangeListener passwordChangeListener;
     OnPreferenceChangeListener connectionTypeChangeListener;
     OnPreferenceChangeListener authTypeChangeListener;
     OnPreferenceChangeListener showEmptyFeedsChangeListener;
+    OnPreferenceChangeListener checkUnreadChangeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,6 +57,7 @@ public class SettingsActivity extends PreferenceActivity
         mConnectionType = (ListPreference) getPreferenceScreen().findPreference(KEY_CONNECTION_TYPE);
         mAuthType = (ListPreference) getPreferenceScreen().findPreference(KEY_AUTH_TYPE);
         mShowEmptyFeeds = (ListPreference) getPreferenceScreen().findPreference(KEY_SHOW_EMPTY_FEED);
+        mCheckUnread = (ListPreference) getPreferenceScreen().findPreference(KEY_CHECK_UNREAD);
 
         textChangeListener = new OnPreferenceChangeListener()
         {
@@ -133,12 +137,31 @@ public class SettingsActivity extends PreferenceActivity
             }
         };
 
+        checkUnreadChangeListener = new OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue)
+            {
+                if (newValue.toString().isEmpty() || newValue.toString().equals("0"))
+                {
+                    preference.setSummary(R.string.setting_check_unread_dont_check);
+                }
+                else
+                    if (newValue.toString().equals("1"))
+                    {
+                        preference.setSummary(R.string.setting_check_unread_check);
+                    }
+                return true;
+            }
+        };
+
         mServerLinkPref.setOnPreferenceChangeListener(textChangeListener);
         mUsernamePref.setOnPreferenceChangeListener(textChangeListener);
         mTextPassword.setOnPreferenceChangeListener(passwordChangeListener);
         mConnectionType.setOnPreferenceChangeListener(connectionTypeChangeListener);
         mAuthType.setOnPreferenceChangeListener(authTypeChangeListener);
         mShowEmptyFeeds.setOnPreferenceChangeListener(showEmptyFeedsChangeListener);
+        mCheckUnread.setOnPreferenceChangeListener(checkUnreadChangeListener);
 
         displayPreferences();
     }
@@ -201,6 +224,16 @@ public class SettingsActivity extends PreferenceActivity
             if (mShowEmptyFeeds.getValue().equals("1"))
             {
                 mShowEmptyFeeds.setSummary(R.string.setting_show_empty_feeds_show);
+            }
+
+        if (mCheckUnread.getValue().isEmpty() || mCheckUnread.getValue().equals("1"))
+        {
+            mCheckUnread.setSummary(R.string.setting_check_unread_check);
+        }
+        else
+            if (mCheckUnread.getValue().equals("0"))
+            {
+                mCheckUnread.setSummary(R.string.setting_check_unread_dont_check);
             }
     }
 

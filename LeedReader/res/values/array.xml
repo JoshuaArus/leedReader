@@ -15,4 +15,9 @@
 		   <item>0</item> <!-- No show empty feeds -->
 		   <item>1</item> <!-- Show empty feeds -->
 		</string-array>
+
+		<string-array name="check_unread_values">
+		   <item>0</item> <!-- No check -->
+		   <item>1</item> <!-- Check -->
+		</string-array>
 </resources>

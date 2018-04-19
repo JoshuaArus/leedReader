@@ -28,7 +28,7 @@ public class DataManagement
     private String              password;
     private String              authMode;
     private String              showEmptyFeeds;
-    private bool                checkUnread;
+    private String              checkUnread;
 
     private ArrayList<Folder>   pFolders;
     private ArrayList<Flux>     pFeeds;
@@ -63,7 +63,7 @@ public class DataManagement
         password = settings.getString("passwordPref", "");
         authMode = settings.getString("authenticationType", "1");
         showEmptyFeeds = settings.getString("showEmptyFeeds", "0");
-        checkUnread = settings.getInt("checkUnread", 0) == 1;
+        checkUnread = settings.getString("checkUnread", "0");
 
         int connectionType_old = connectionType;
         // int connectionType_new = settings.getInt("connectionType", cOnLine);
@@ -284,7 +284,7 @@ public class DataManagement
 
     public void retrieveUnreadCount()
     {
-        if (checkUnread)
+        if (checkUnread.Equals("1"))
             connection.getUnreadCount();
     }
 

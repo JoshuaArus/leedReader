@@ -32,13 +32,22 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/setting_configuration_setting" >
-        <ListPreference
+
+        <ListPreference
             android:defaultValue="0"
             android:entries="@array/show_empty_feeds_array"
             android:entryValues="@array/show_empty_feeds_values"
             android:key="showEmptyFeeds"
             android:summary="@string/setting_show_empty_feeds_summary"
             android:title="@string/setting_show_empty_feeds" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/check_unread_array"
+            android:entryValues="@array/check_unread_values"
+            android:key="checkUnread"
+            android:summary="@string/setting_check_unread_summary"
+            android:title="@string/setting_check_unread" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/setting_authentication_mode" >
