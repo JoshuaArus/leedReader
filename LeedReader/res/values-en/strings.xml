@@ -75,4 +75,9 @@
     <string name="msg_function_unavailable">Function unavailable for this item</string>
     <string name="msg_empty_feed">This feed is empty.</string>
 
+    <string name="channel_name">Global</string>
+    <string name="channel_description">Used by the unread count notification</string>
+    <string name="notification_title">%d unread</string>
+    <string name="notification_content">There are %d unread event(s) in your feeds</string>
+
 </resources>

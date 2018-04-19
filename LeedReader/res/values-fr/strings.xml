@@ -75,4 +75,9 @@
     <string name="msg_function_unavailable">Fonction non disponible pour cet élément</string>
     <string name="msg_empty_feed">Ce flux ne contient pas d\'articles.</string>
 
+    <string name="channel_name">Global</string>
+    <string name="channel_description">Utilisé pour la notification du nombre d'articles non lu</string>
+    <string name="notification_title">%d non lu(s)</string>
+    <string name="notification_content">Il y a %d article(s) non lu(s) disponible(s) dans vos flux</string>
+
 </resources>

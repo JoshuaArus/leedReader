@@ -71,6 +71,7 @@ public class APIConnection
     private static final int  cAllRead      = 9;
     private static final int  cOffsetFeed   = 10;
     private static final int  cCheckVersion = 11;
+    private static final int  cServiceCheck = 12;
 
     private DefaultHttpClient httpClient;
     private String            userAgent;
@@ -165,6 +166,12 @@ public class APIConnection
         pFeed = new Flux();
         new ServerConnection().execute(leedURL + "/json.php?option=getUnread" + "&nbMaxArticle="
                 + nbMaxArticle);
+    }
+
+    public void getUnreadCount()
+    {
+        typeRequest = cServiceCheck;
+        new ServerConnection().execute(leedURL + "/json.php?option=getUnreadCount");
     }
 
     public void getCategories(String mShowEmptyFeeds)
@@ -359,6 +366,7 @@ public class APIConnection
                 case cAllRead:
                 case cOffsetFeed:
                 case cCheckVersion:
+                case cServiceCheck:
                 break;
 
                 case cInit:
@@ -524,6 +532,14 @@ public class APIConnection
                         case cSynchronize:
                             synchronisationResult(result);
                         break;
+
+                        case cServiceCheck:
+                            jsonObject = new JSONObject(result);
+
+                            int unreadCount = jsonObject.getInt("unreadCount");
+
+                            setUnreadCount(unreadCount);
+                        break;
                     }
                 }
                 else
@@ -605,5 +621,10 @@ public class APIConnection
                         .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void setUnreadCount(int unreadCount)
+    {
+        ((DataManagement) dataContext).setUnreadCount(unreadCount);
     }
 }

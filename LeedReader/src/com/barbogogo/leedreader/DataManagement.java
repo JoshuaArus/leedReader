@@ -28,11 +28,14 @@ public class DataManagement
     private String              password;
     private String              authMode;
     private String              showEmptyFeeds;
+    private bool                checkUnread;
 
     private ArrayList<Folder>   pFolders;
     private ArrayList<Flux>     pFeeds;
     private Flux                pFeed;
     private int                 iterateurFeed;
+
+    private int                 unreadCount;
 
     public static final String  PREFS_NAME         = "MyPrefsFile";
 
@@ -46,6 +49,8 @@ public class DataManagement
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(pContext);
 
         connectionType = Integer.valueOf(settings.getString("connectionType", "0"));
+
+        unreadCount = 0;
     }
 
     public void getParameters()
@@ -58,6 +63,7 @@ public class DataManagement
         password = settings.getString("passwordPref", "");
         authMode = settings.getString("authenticationType", "1");
         showEmptyFeeds = settings.getString("showEmptyFeeds", "0");
+        checkUnread = settings.getInt("checkUnread", 0) == 1;
 
         int connectionType_old = connectionType;
         // int connectionType_new = settings.getInt("connectionType", cOnLine);
@@ -274,6 +280,23 @@ public class DataManagement
                 ((LeedReader) pContext).updateFeed(DBData.getHomePage());
             break;
         }
+    }
+
+    public void retrieveUnreadCount()
+    {
+        if (checkUnread)
+            connection.getUnreadCount();
+    }
+
+    public int getUnreadCount()
+    {
+        return unreadCount;
+    }
+
+    public void setUnreadCount(int pUnreadCount)
+    {
+        unreadCount = pUnreadCount;
+        NotificationFactory.updateNotification(unreadCount);
     }
 
     public void updateCategories(ArrayList<Folder> folders)
