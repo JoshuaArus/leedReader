@@ -26,7 +26,6 @@ public class NotificationFactory
 		    // Register the channel with the system
 		    getNotificationManager().createNotificationChannel(channel);
 		}
-		channelRegistered = true;
 	}
 
 	public static void updateNotification(int count)
