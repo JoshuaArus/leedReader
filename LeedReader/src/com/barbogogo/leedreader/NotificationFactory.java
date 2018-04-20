@@ -3,7 +3,6 @@ package com.barbogogo.leedreader;
 public class NotificationFactory
 {
 	private static string CHANNEL_ID = "General";
-	private static bool channelRegistered = false;
 	private static NotificationManagerCompat _notificationManager;
 	private static int notificationId;
 
@@ -25,14 +24,14 @@ public class NotificationFactory
 		    NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
 		    channel.setDescription(description);
 		    // Register the channel with the system
-		    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-		    notificationManager.createNotificationChannel(channel);
+		    getNotificationManager().createNotificationChannel(channel);
 		}
+		channelRegistered = true;
 	}
 
 	public static void updateNotification(int count)
 	{
-		if (!channelRegistered)
+		if (getNotificationManager().getNotificationChannel(CHANNEL_ID) == null)
 			registerChannel();
 
 		if (count == 0)
